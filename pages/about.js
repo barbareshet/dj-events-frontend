@@ -1,7 +1,7 @@
-
+import Layout from "../components/Layout";
 function About() {
     return (
-        <div>
+        <Layout title="DJ Events App - About page">
             <h1>About</h1>
             <p>
                 This is an app to find DJ & Musical events
@@ -9,7 +9,7 @@ function About() {
             <p>
                 Version 1.0.0
             </p>
-        </div>
+        </Layout>
     );
 }
 
