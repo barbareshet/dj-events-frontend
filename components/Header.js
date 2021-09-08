@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Search from "@/components/Search";
 import styles from "@/styles/Heder.module.css";
 
 function Header(props) {
@@ -9,6 +10,7 @@ function Header(props) {
                     <a>DJ Events</a>
                 </Link>
             </div>
+            <Search/>
             <nav>
                 <ul>
                     <li>

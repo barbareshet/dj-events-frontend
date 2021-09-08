@@ -78,7 +78,7 @@ export default EventPage
 export async function getServerSideProps({ query: { slug } }) {
     const res = await fetch(`${API_URL}/events?slug=${slug}`)
     const events = await res.json();
-    console.log(events)
+    // console.log(events)
     return {
         props: {
             evt: events[0],
