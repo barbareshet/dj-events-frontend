@@ -11,7 +11,6 @@ export default function Home( {events} ) {
             <h1>Upcoming DJ Events</h1>
         </div>
         {events.length === 0 && <h3>No events to show</h3>}
-
         {events.map((evt) => (
             <EventItem key={evt.id} evt={evt} />
         ))}
@@ -28,12 +27,12 @@ export default function Home( {events} ) {
 }
 
 export async function getServerSideProps(){
-    const res = await fetch(`${ API_URL }/api/events`)
+    const res = await fetch(`${ API_URL }/events?_sort=date:ASC&_limit=3`)
     const events = await res.json()
     // Will display in the terminal - server side rendering
     // console.log(events);
     return {
-        props: { events:events.slice(0,3) },
+        props: { events },
 
     }
 }
