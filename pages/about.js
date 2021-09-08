@@ -1,4 +1,4 @@
-import Layout from "../components/Layout";
+import Layout from "@/components/Layout";
 function About() {
     return (
         <Layout title="DJ Events App - About page">
