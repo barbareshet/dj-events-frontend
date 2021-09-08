@@ -4,7 +4,7 @@ import Link from "next/link";
 import { API_URL } from "@/config/index";
 import Layout from "@/components/Layout";
 import EventItem from "@/components/EventItem";
-
+import GoBackButton from "@/components/GoBackButton";
 export default function SearchPage( {events} ) {
     // will display in the client side - FE rendering
     // console.log(events);
@@ -12,9 +12,7 @@ export default function SearchPage( {events} ) {
     return (
         <Layout title="DJ Events App - Search Results">
             <div>
-                <Link href="/events">
-                    <a>Go Back</a>
-                </Link>
+                <GoBackButton/>
                 <h1>Search results for: {router.query.term}</h1>
             </div>
             {events.length === 0 && <h3>No events to show</h3>}

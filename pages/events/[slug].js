@@ -3,6 +3,7 @@ import Image from "next/image"
 import { FaPencilAlt, FaTimes, FaAngleDoubleLeft } from "react-icons/fa"
 import Layout from "@/components/Layout";
 import {API_URL} from "@/config/index";
+import GoBackButton from "@/components/GoBackButton";
 import styles from "@/styles/SingleEvent.module.css"
 const EventPage = ({evt}) => {
     const deleteEvent = (e) => {
@@ -37,11 +38,7 @@ const EventPage = ({evt}) => {
                 <h3>Venue:</h3>
                 <p>{evt.address}</p>
 
-                <Link href="/events">
-                    <a className={styles.back}>
-                       <FaAngleDoubleLeft/> Back to all events
-                    </a>
-                </Link>
+                <GoBackButton/>
             </div>
         </Layout>
     )
