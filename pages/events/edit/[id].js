@@ -6,6 +6,8 @@ import { API_URL } from "@/config/index";
 import styles from "@/styles/Form.module.css"
 import Layout from "@/components/Layout";
 import GoBackButton from "@/components/GoBackButton";
+import Modal from "@/components/Modal";
+import ImageUpload from "@/components/ImageUpload";
 import 'react-toastify/dist/ReactToastify.min.css';
 import Image from "next/image";
 import {FaImage} from "react-icons/fa";
@@ -22,6 +24,7 @@ function EditEventPage({evt}) {
         description:evt.description
     })
     const [imagePreview, setImagePreview] = useState(evt.image ? evt.image.formats.thumbnail.url : null )
+    const [showModal, setShowModal] = useState( false );
     const router = useRouter();
     const handleSubmit = async (e)=>{
         e.preventDefault();
@@ -51,6 +54,13 @@ function EditEventPage({evt}) {
     const handleInputChange = (e)=>{
         const { name, value } = e.target;
         setValues({...values, [name]:value});
+    }
+    const imageUploaded = async (e) => {
+        const res = await fetch(`${API_URL}/events/${evt.id}`)
+        const data = await res.json()
+        // console.log(data);
+        setImagePreview(data.image.formats.thumbnail.url)
+        setShowModal(false)
     }
     return (
         <Layout title="Edit Event">
@@ -135,9 +145,12 @@ function EditEventPage({evt}) {
                 </div>
                 )}
             <div>
-                <button className="btn-secondary">
+                <button className="btn-secondary" onClick={() => setShowModal(true)}>
                     <FaImage/> Set Image
                 </button>
+                <Modal show={showModal} onClose={ () => setShowModal(false)} title="Image Upload">
+                    <ImageUpload evtId={evt.id} imageUploaded={imageUploaded}/>
+                </Modal>
             </div>
         </Layout>
     )

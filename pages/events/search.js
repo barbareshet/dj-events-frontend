@@ -1,6 +1,5 @@
 import qs from "qs";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { API_URL } from "@/config/index";
 import Layout from "@/components/Layout";
 import EventItem from "@/components/EventItem";
@@ -33,7 +32,7 @@ export async function getServerSideProps({query: {term}}){
                 { name_contains: term },
                 { performers_contains: term },
                 { description_contains: term },
-                { veneu_contains: term },
+                { venue_contains: term },
             ]
         }
     })
