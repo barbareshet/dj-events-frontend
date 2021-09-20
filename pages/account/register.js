@@ -13,6 +13,8 @@ function Register() {
     const [passwordConfirm, setPasswordConfirm] = useState('');
 
     const { register, error } = useContext(AuthContext);
+
+    useEffect( () => error && toast.error(error));
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -22,7 +24,7 @@ function Register() {
             return
         }
 
-        register({username, email,password, passwordConfirm})
+        register({username, email, password, passwordConfirm})
     }
     return (
         <Layout title="Register new account">

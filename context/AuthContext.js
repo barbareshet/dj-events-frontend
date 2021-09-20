@@ -9,11 +9,28 @@ export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
     const router = useRouter();
-    useEffect(() => checkUserLoggedin(),[]);
+    useEffect(() => checkUserLoggedIn(),[]);
 
     //Register User
-    const register =async (user) => {
-        console.log(user);
+    const register = async (user) => {
+        const res = await fetch(`${ NEXT_URL }/api/register`, {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ user })
+        });
+
+        const data = await res.json();
+
+        // console.log(data);
+        if ( res.ok ){
+            setUser(data.user);
+            await router.push('/account/dashboard')
+        } else {
+            setError(data.message);
+            setError(null);
+        }
     }
     //Login User
     const login = async ({email: identifier, password}) => {
@@ -33,7 +50,7 @@ export const AuthProvider = ({children}) => {
         // console.log(data);
         if ( res.ok ){
             setUser(data.user);
-            router.push('/account/dashboard')
+            await router.push('/account/dashboard')
         } else {
             setError(data.message);
             setError(null);
@@ -41,18 +58,23 @@ export const AuthProvider = ({children}) => {
     }
     //Logout user
     const logout =async () => {
-        console.log('Logout');
+        const res = await fetch(`${NEXT_URL}/api/logout`,{
+            method: 'POST',
+        })
+        if ( res.ok ){
+            setUser(null);
+            await router.push('/');
+        }
     }
     //Check if user is logged in
-    const checkUserLoggedin =async (user) => {
-        console.log('check');
-
+    const checkUserLoggedIn = async (user) => {
         const res = await fetch(`${NEXT_URL}/api/user`)
-        const data = await res.json();
-        if ( res.ok ){
-            setUser(data.user);
+        const data = await res.json()
+
+        if (res.ok) {
+            setUser(data.user)
         } else {
-            setUser(null);
+            setUser(null)
         }
     }
 

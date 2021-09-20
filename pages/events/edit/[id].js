@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import Image from "next/image";
 import {FaImage} from "react-icons/fa";
 
-function EditEventPage({evt}) {
+function EditEventPage({evt, token}) {
 
     const [values, setValues] = useState({
         name:evt.name,
@@ -39,7 +39,8 @@ function EditEventPage({evt}) {
         const res = await fetch(`${API_URL}/events/${evt.id}`, {
             method: 'PUT',
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(values)
         })
@@ -48,7 +49,7 @@ function EditEventPage({evt}) {
             toast.error('Something went wrong')
         } else {
             const evt = await res.json();
-            router.push(`/events/${evt.slug}`)
+            await router.push(`/events/${evt.slug}`)
         }
     }
     const handleInputChange = (e)=>{
@@ -159,6 +160,7 @@ function EditEventPage({evt}) {
 export default EditEventPage
 
 export async function getServerSideProps({params:{id}, req}){
+    
     const res = await fetch(`${API_URL}/events/${id}`);
     const evt = await res.json();
 

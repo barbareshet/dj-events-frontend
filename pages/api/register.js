@@ -3,14 +3,15 @@ import cookie from "cookie";
 export default async (req,res) =>{
 
     if ( req.method === 'POST'){
-        const { identifier, password } = req.body;
-        const strapiRes = await fetch(`${API_URL}/auth/local`,{
+        const { username, email, password } = req.body;
+        const strapiRes = await fetch(`${API_URL}/auth/local/register`,{
             method:'POST',
             headers:{
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                identifier,
+                username,
+                email,
                 password
             })
         })
@@ -18,8 +19,8 @@ export default async (req,res) =>{
         if (strapiRes.ok){
             //Set http cookie
             res.setHeader(
-                    'Set-Cookie',
-                        cookie.serialize('token', data.jwt, {
+                'Set-Cookie',
+                cookie.serialize('token', data.jwt, {
                         httpOnly:true,
                         secure: process.env.NODE_ENV !== 'dev',
                         maxAge: 60 * 60 * 24 * 7, // 1 week
