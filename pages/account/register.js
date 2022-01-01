@@ -6,6 +6,8 @@ import Link from "next/link"
 import Layout from "@/components/Layout";
 import AuthContext from "@/context/AuthContext";
 import styles from "@/styles/AuthForm.module.css"
+
+
 function Register() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -24,7 +26,7 @@ function Register() {
             return
         }
 
-        register({username, email, password, passwordConfirm})
+        register({username, email, password })
     }
     return (
         <Layout title="Register new account">
